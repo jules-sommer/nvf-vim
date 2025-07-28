@@ -1,16 +1,15 @@
-{ lib, ... }:
-let
-  inherit (lib)
+{lib, ...}: let
+  inherit
+    (lib)
     enabled
     enabled'
     disabled
     disabled'
     ;
-in
-{
+in {
   vim.visuals = {
     nvim-scrollbar = enabled;
-    nvim-web-devicons = enabled;
+    nvim-web-devicons = disabled;
     nvim-cursorline = disabled' {
       setupOpts = {
         cursorline = {
@@ -23,14 +22,14 @@ in
           enable = true;
           min_length = 3;
           hl = {
-            underline = true;
+            bold = true;
           };
         };
       };
     };
 
     highlight-undo = enabled;
-    indent-blankline = enabled' {
+    indent-blankline = disabled' {
       setupOpts = {
         scope = {
           show_start = false;

@@ -5,24 +5,18 @@
 }: let
   inherit
     (lib)
-    filterAttrs
-    path
-    concatMap
-    map
-    hasSuffix
     enabled'
     enabled
     disabled
     disabled'
     ;
-
-  inherit (builtins) attrNames readDir pathExists;
 in {
   imports = lib.getModulesRecursive {
     baseDir = ./.;
     maxDepth = 2;
     includeNonDefaultNixFiles = true;
   };
+
   config = {
     _module.args = {
       inherit lib;
@@ -30,16 +24,14 @@ in {
 
     vim = {
       enableLuaLoader = true;
-      additionalRuntimePaths = [
-      ];
+      additionalRuntimePaths = [];
 
-      diagnostics = {
+      statusline.lualine = disabled' {
+        theme = "tokyonight";
       };
 
-      statusline = {
-        lualine = enabled' {
-          theme = "tokyonight";
-        };
+      mini = {
+        statusline = enabled;
       };
 
       theme = enabled' {
@@ -61,11 +53,17 @@ in {
       };
 
       binds = {
-        whichKey = enabled;
+        whichKey =
+          enabled'
+          {
+            setupOpts = {
+              preset = "helix";
+            };
+          };
         cheatsheet = enabled;
       };
 
-      telescope = enabled;
+      telescope = disabled;
 
       git = enabled' {
         gitsigns = enabled' {
@@ -74,25 +72,11 @@ in {
       };
 
       notify = {
-        nvim-notify = enabled;
+        nvim-notify = disabled;
       };
 
-      dashboard = {
-        dashboard-nvim = disabled;
-      };
-
-      autocomplete.blink-cmp = enabled' {
-        friendly-snippets = enabled;
-        mappings = {
-          close = "<C-c>";
-        };
-        setupOpts = {
-          fuzzy.implementation = "prefer_rust_with_warning";
-          signature = {enabled = true;};
-        };
-      };
       utility = {
-        icon-picker = enabled;
+        icon-picker = disabled;
         surround = enabled;
         diffview-nvim = enabled;
 
@@ -114,12 +98,14 @@ in {
       };
 
       ui = {
+        breadcrumbs =
+          enabled' {
+          };
         borders = enabled;
-        noice = enabled;
+        noice = enabled' {};
         colorizer = enabled;
         smartcolumn = disabled' {
           setupOpts.custom_colorcolumn = {
-            # this is a freeform module, it's `buftype = int;` for configuring column position
             nix = "110";
             ruby = "120";
             java = "130";

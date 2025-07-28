@@ -18,7 +18,7 @@ in
     map (name: {
       inherit name;
       value = import ./${name}/default.nix {
-        inherit buildVimPlugin fetchFromGitHub;
+        inherit buildVimPlugin fetchFromGitHub pkgs;
       };
     })
     packageNamesList

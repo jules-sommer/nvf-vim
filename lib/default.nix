@@ -84,51 +84,6 @@ in rec {
     # kick off with the path you passed in
     recurse baseDir 0;
 
-  getFilteredModulePathsRecursive = {
-    base-dir ? ./.,
-    includeNixFiles ? true,
-    max-depth ? 1,
-  }: let
-    inner = currentDir: depth: let
-      entries = builtins.readDir currentDir;
-
-      filtered =
-        lib.filterAttrs (
-          name: type:
-          # Include non-hidden directories for recursion
-            (type == "directory" && !(lib.hasPrefix "." name))
-            ||
-            # Include valid Nix files
-            (type
-              == "regular"
-              && isNixFile {
-                inherit name;
-                includeDefaultNix = includeNixFiles;
-              })
-        )
-        entries;
-
-      # Process current directory entries
-      process = name: type:
-        if type == "directory" && depth < max-depth
-        then
-          # Recurse into subdirectory
-          inner (lib.path.append currentDir name) (depth + 1)
-        else if type == "regular"
-        then
-          # Return file path
-          [(lib.path.append currentDir name)]
-        else
-          # Skip other entries
-          [];
-
-      # Collect all paths
-      paths = lib.flatten (lib.mapAttrsToList process filtered);
-    in
-      paths;
-  in
-    inner base-dir 0;
-
   isNixFile = {
     name,
     includeDefaultNix ? false,

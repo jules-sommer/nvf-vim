@@ -8,7 +8,6 @@
     enabled
     enabled'
     disabled
-    disabled'
     ;
 in {
   vim = {
@@ -20,7 +19,9 @@ in {
     lsp = enabled' {
       formatOnSave = true;
       lspSignature.enable = !config.vim.autocomplete.blink-cmp.enable;
+      inlayHints = enabled;
     };
+
     languages = {
       enableFormat = true;
       enableTreesitter = true;
@@ -28,7 +29,9 @@ in {
 
       zig = enabled;
       nix = enabled;
-      markdown = enabled;
+      markdown = enabled' {
+        extensions.render-markdown-nvim = enabled;
+      };
 
       bash = enabled;
       clang = enabled;

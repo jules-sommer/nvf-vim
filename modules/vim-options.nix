@@ -36,7 +36,6 @@ in {
       ruler = false;
       virtualedit = "block"; # allow cursor to move where there is no text in visual block mode:wildmode
       smoothscroll = true;
-      foldmethod = "expr";
       linebreak = true; # Wrap lines at convenient points
       mouse = "a"; # Enable mouse mode
       number = true; # Print line number

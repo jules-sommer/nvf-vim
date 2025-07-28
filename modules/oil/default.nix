@@ -5,10 +5,9 @@ in {
     keymaps = [
       {
         key = "<leader>o";
+        desc = "Open [o]il-nvim interactive file explorer buffer.";
         mode = "n";
-        silent = true;
         lua = true;
-        noremap = true;
         action = "require('oil').open_float";
       }
     ];

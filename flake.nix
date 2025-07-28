@@ -13,36 +13,27 @@
             extraVimPlugins = self.vimPlugins;
             vimPlugins = prev.vimPlugins // self.vimPlugins;
           })
+          (_: prev: {
+            vimPlugins =
+              prev.vimPlugins
+              // {
+                inherit (inputs.blink-cmp.packages.${prev.system}) blink-cmp;
+              };
+          })
         ];
 
         pkgs = import nixpkgs {
           inherit system overlays;
         };
 
-        lib = pkgs.lib.extend (
-          _: prev:
-            prev
-            // nvf.lib
-            // self.lib
-        );
-      in {
-        packages.${system}.default =
-          (nvf.lib.neovimConfiguration {
-            inherit pkgs;
-            extraSpecialArgs = {
-              inherit lib;
-            };
-            modules = [
-              ./modules
-              {vim.package = inputs.neovim-nightly.packages.${system}.default;}
-            ];
-          }).neovim;
-
-        lib = import ./lib {
-          inherit (pkgs) lib;
-        };
-        vimPlugins = import ./pkgs {inherit pkgs;};
-      }
+        lib = pkgs.lib.extend (_: prev: prev // nvf.lib // self.lib);
+      in
+        utils.lib.meld (inputs
+          // {inherit system pkgs lib self inputs;}) [
+          ./devShells.nix
+          ./packages.nix
+          ./theme.nix
+        ]
     );
 
   inputs = {
@@ -50,7 +41,7 @@
     utils.url = "github:numtide/flake-utils";
     nvf.url = "github:NotAShelf/nvf";
 
-    julesdream.url = "/home/jules/000_dev/000_nix/julesdream";
+    blink-cmp.url = "github:Saghen/blink.cmp";
 
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
