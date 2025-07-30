@@ -1,11 +1,7 @@
-{
-  buildVimPlugin,
-  fetchFromGitHub,
-  ...
-}: (buildVimPlugin {
+{pkgs, ...}: (pkgs.vimUtils.buildVimPlugin {
   pname = "qbessa";
   version = "2025-01-20";
-  src = fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     owner = "sgraham";
     repo = "qbessa.vim";
     rev = "30ba21907d14bb95c36446460fc6afe6b3a3e90e";

@@ -1,4 +1,4 @@
-{pkgs, ...}: (pkgs.buildVimPlugin {
+{pkgs, ...}: (pkgs.vimUtils.buildVimPlugin {
   pname = "vim-wordmotion";
   version = "2025-07-24";
   src = pkgs.fetchFromGitHub {

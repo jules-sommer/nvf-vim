@@ -1,5 +1,7 @@
 {
   lib,
+  pkgs,
+  inputs,
   config,
   ...
 }: let
@@ -11,7 +13,15 @@
     ;
 in {
   vim = {
-    treesitter.context = disabled;
+    treesitter = enabled' {
+      context = disabled;
+      autotagHtml = true;
+      fold = false;
+      highlight = enabled' {
+        additionalVimRegexHighlighting = true;
+      };
+      textobjects = enabled;
+    };
 
     fzf-lua = enabled;
     snippets.luasnip = enabled;
@@ -27,7 +37,6 @@ in {
       enableTreesitter = true;
       enableExtraDiagnostics = true;
 
-      zig = enabled;
       nix = enabled;
       markdown = enabled' {
         extensions.render-markdown-nvim = enabled;
@@ -50,7 +59,22 @@ in {
       python = enabled;
       typst = enabled;
       rust = enabled' {
-        crates = enabled;
+        crates = enabled' {
+          codeActions = true;
+        };
+        lsp = enabled' {
+          opts = ''
+            ['rust-analyzer'] = {
+              cargo = {allFeature = true},
+              checkOnSave = true,
+              procMacro = {
+                enable = true,
+              },
+            },
+          '';
+        };
+        treesitter = enabled;
+        dap = enabled;
       };
     };
   };

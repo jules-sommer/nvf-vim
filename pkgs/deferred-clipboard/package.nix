@@ -1,6 +1,6 @@
 {pkgs, ...}:
 pkgs.vimUtils.buildVimPlugin {
-  pname = "vim-wordmotion";
+  pname = "deferred-clipboard";
   version = "2025-07-24";
   src = pkgs.fetchFromGitHub {
     owner = "EtiamNullam";

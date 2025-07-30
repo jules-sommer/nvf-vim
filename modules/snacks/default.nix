@@ -1,13 +1,12 @@
 {lib, ...}: let
-  inherit (lib) map enabled enabled' listToAttrs;
+  inherit (lib) enabled enabled' disabled;
 in {
   vim = {
-    luaConfigPost = ''
-      Snacks = require('snacks')
-    '';
     utility.snacks-nvim = enabled' {
       setupOpts = {
+        animate = disabled;
         bigfile = enabled;
+        lazygit = enabled;
         dashboard = enabled' {
           width = 80;
           preset.header = ''

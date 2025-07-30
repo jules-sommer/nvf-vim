@@ -14,10 +14,16 @@
       lua = true;
 
       mode = ["n"];
-      action = ''
-        function() Snacks.picker.buffers() end
+      action = ''        function() require("snacks").picker.buffers()  end
       '';
-      desc = "Buffers";
+      desc = "Fuzzy search through open buffers.";
+    }
+    {
+      key = "<leader>sf";
+      mode = ["n"];
+      lua = true;
+      action = ''function() require("snacks").picker.smart() end'';
+      desc = "Fuzzy [s]earch [f]iles";
     }
     {
       key = "<leader>/";

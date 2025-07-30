@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib) enabled' enabled;
 in {
   vim.autocomplete.blink-cmp = enabled' {
@@ -35,6 +31,37 @@ in {
         menu = {
           border = "rounded";
           winhighlight = "Normal:NormalFloat,CursorLine:BlinkCmpDocCursorLine,Search:None";
+
+          draw = {
+            components = {
+              kind_icon = {
+                text = lib.generators.mkLuaInline ''
+                  function(ctx)
+                    local icon = ctx.kind_icon
+                  	if ctx.item.source_name == "LSP" then
+                  		local color_item = require("nvim-highlight-colors").format(ctx.item.documentation, { kind = ctx.kind })
+                  		if color_item and color_item.abbr ~= "" then
+                  		  icon = color_item.abbr
+                  		end
+                  	end
+                  	return icon .. ctx.icon_gap
+                  end
+                '';
+                highlight = lib.generators.mkLuaInline ''
+                  function(ctx)
+                    local highlight = "BlinkCmpKind" .. ctx.kind
+                    if ctx.item.source_name == "LSP" then
+                      local color_item = require("nvim-highlight-colors").format(ctx.item.documentation, { kind = ctx.kind })
+                      if color_item and color_item.abbr_hl_group then
+                        highlight = color_item.abbr_hl_group
+                      end
+                    end
+                    return highlight
+                  end
+                '';
+              };
+            };
+          };
         };
 
         list = {

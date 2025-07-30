@@ -1,10 +1,27 @@
 {theme, ...}: {
   vim.highlight = {
     NormalFloat = {
+      bg = theme.none;
       blend = 10;
     };
-    InlayHint = {
-      bg = theme.transparent;
+    # Comment        xxx cterm=italic gui=italic guifg=#565f89
+
+    Comment = {
+      italic = false;
+      fg = theme.comment;
+    };
+
+    "@keyword" = {
+      fg = theme.magenta;
+      italic = false;
+      bold = true;
+    };
+
+    LspInlayHint = {
+      bg = theme.none;
+      fg = theme.comment;
+      bold = true;
+      blend = 20;
     };
     StatusLine = {
       bg = null;
@@ -16,9 +33,10 @@
       bg = "#ffffff";
     };
     FloatBorder = {
-      fg = "#451840";
-      bg = null;
+      fg = theme.magenta;
+      bg = theme.none;
     };
+
     WhichKey.link = "NormalFloat";
     WhichKeyBorder.link = "FloatBorder";
     MsgArea.link = "NormalFloat";

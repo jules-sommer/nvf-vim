@@ -1,11 +1,7 @@
-{
-  buildVimPlugin,
-  fetchFromGitHub,
-  ...
-}: (buildVimPlugin {
+{pkgs, ...}: (pkgs.vimUtils.buildVimPlugin {
   pname = "satellite-nvim";
   version = "2024-08-19";
-  src = fetchFromGitHub {
+  src = pkgs.fetchFromGitHub {
     owner = "lewis6991";
     repo = "satellite.nvim";
     rev = "fc9672c9a14371ad948b5c42588d5ccfc4120f42";

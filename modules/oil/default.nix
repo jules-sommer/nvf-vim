@@ -5,10 +5,17 @@ in {
     keymaps = [
       {
         key = "<leader>o";
-        desc = "Open [o]il-nvim interactive file explorer buffer.";
+        desc = "Open [o]il-nvim interactive file explorer float.";
         mode = "n";
         lua = true;
         action = "require('oil').open_float";
+      }
+      {
+        key = "<leader>ob";
+        desc = "Open [o]il-nvim interactive file explorer [b]uffer.";
+        mode = "n";
+        lua = true;
+        action = "require('oil').open";
       }
     ];
 
@@ -30,6 +37,20 @@ in {
         };
         keymaps = {
           "<C-c>" = "actions.close";
+          "<C-.>" = "actions.toggle_hidden";
+          "gd" = {
+            desc = "Toggle file detail view";
+            callback = lib.generators.mkLuaInline ''
+              function()
+                detail = not detail
+                if detail then
+                  require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+                else
+                  require("oil").set_columns({ "icon" })
+                end
+              end
+            '';
+          };
         };
       };
     };

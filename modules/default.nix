@@ -23,16 +23,21 @@ in {
     };
 
     vim = {
+      globals = {
+        maplocalleader = " ";
+        P = lib.generators.mkLuaInline ''
+          function (v)
+            print(vim.inspect(v))
+            return v
+          end
+        '';
+      };
       enableLuaLoader = true;
       additionalRuntimePaths = [];
 
-      statusline.lualine = disabled' {
-        theme = "tokyonight";
-      };
-
-      mini = {
-        statusline = enabled;
-      };
+      # statusline.lualine = disabled' {
+      #   theme = "tokyonight";
+      # };
 
       theme = enabled' {
         name = "tokyonight";
@@ -60,12 +65,12 @@ in {
               preset = "helix";
             };
           };
-        cheatsheet = enabled;
+        cheatsheet = disabled;
       };
 
       telescope = disabled;
 
-      git = enabled' {
+      git = disabled' {
         gitsigns = enabled' {
           codeActions = disabled;
         };
@@ -76,13 +81,25 @@ in {
       };
 
       utility = {
+        undotree = enabled;
         icon-picker = disabled;
-        surround = enabled;
-        diffview-nvim = enabled;
+        surround = disabled;
+        diffview-nvim = disabled;
 
         motion = {
-          hop = enabled;
-          leap = enabled;
+          hop = disabled;
+          leap = disabled;
+          flash-nvim = lib.enabledLuaPlugin {
+            modes = {
+              char = {
+                enabled = true;
+                autohide = false;
+                jump_labels = true;
+                multi_line = false;
+              };
+            };
+          };
+
           precognition.enable = true;
         };
 
@@ -98,23 +115,14 @@ in {
       };
 
       ui = {
-        breadcrumbs =
-          enabled' {
-          };
-        borders = enabled;
-        noice = enabled' {};
-        colorizer = enabled;
-        smartcolumn = disabled' {
-          setupOpts.custom_colorcolumn = {
-            nix = "110";
-            ruby = "120";
-            java = "130";
-            go = [
-              "90"
-              "130"
-            ];
-          };
+        breadcrumbs = enabled' {
+          source = "nvim-navic";
+          navbuddy = enabled;
         };
+        borders = enabled' {
+          globalStyle = "rounded";
+        };
+        noice = enabled;
       };
     };
   };

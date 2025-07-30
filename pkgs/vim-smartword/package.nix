@@ -1,4 +1,4 @@
-pkgs: (pkgs.buildVimPlugin {
+{pkgs, ...}: (pkgs.vimUtils.buildVimPlugin {
   pname = "vim-smartword";
   version = "2025-02-24";
   src = pkgs.fetchFromGitHub {

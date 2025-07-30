@@ -4,7 +4,7 @@ in {
   vim = {
     clipboard = enabled' {
       providers.wl-copy = enabled;
-      registers = "unnamed,unnamedplus";
+      registers = "unnamedplus";
     };
     options = {
       cmdheight = 1; # more space in the neovim command line for displaying messages
@@ -16,7 +16,7 @@ in {
       termguicolors = true; # set term gui colors (most terminals support this)
       timeoutlen = 350; # time to wait for a mapped sequence to complete (in milliseconds)
       title = true; # set the title of window to the value of the titlestring
-      titlestring = "%<%F%=%l/%L - neUwUvim"; # what the title of the window will be set to
+      titlestring = "%<%F%=%l/%L - gurlvim"; # what the title of the window will be set to
       undofile = true; # enable persistent undo
       updatetime = 50; # faster completion
       expandtab = true; # convert tabs to spaces

@@ -2,13 +2,8 @@ _: {
   vim.keymaps = [
     {
       key = "<leader>bd";
-      lua = true;
       mode = ["n"];
-      action = ''
-        function()
-          Snacks.bufdelete.delete()
-        end
-      '';
+      action = "<cmd>bd<CR>";
       desc = "[b]uffer [d]elete";
     }
     {

@@ -2,14 +2,11 @@
   inherit
     (lib)
     enabled
-    enabled'
-    disabled
     disabled'
     ;
 in {
   vim.visuals = {
     nvim-scrollbar = enabled;
-    nvim-web-devicons = disabled;
     nvim-cursorline = disabled' {
       setupOpts = {
         cursorline = {
@@ -29,13 +26,6 @@ in {
     };
 
     highlight-undo = enabled;
-    indent-blankline = disabled' {
-      setupOpts = {
-        scope = {
-          show_start = false;
-        };
-      };
-    };
     rainbow-delimiters = enabled;
   };
 }
